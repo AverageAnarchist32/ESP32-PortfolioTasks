@@ -1,5 +1,5 @@
-#include <WiFi.h>
-#include <WiFiClient.h>
+#include <WiFi.h>//Library for Wifi connection on Webserver for Arduino
+#include <WiFiClient.h>//Wifi client is anyt device that can connect to a network
 #include <WebServer.h>
 
 const char* ssid = "CGS-BYOD";
