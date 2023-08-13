@@ -2,26 +2,36 @@
 #include <WiFiClient.h>//Wifi client is any device that can connect to a network
 #include <WebServer.h>//Library for access to js server file
 
-const char* ssid = "TKZ-10";
-const char* password = "Careful11";
-const int analogPin = 4;//Connects to Analog Pin 4 (output)
+#include <ArduinoJson.h> // Include the ArduinoJson library
+
+const char* ssid = "YourWiFiNetworkName";
+const char* password = "YourWiFiPassword";
+const int analogPin = 36;
 
 WebServer server(80);
 
 float floatMap(float x, float in_min, float in_max, float out_min, float out_max) {
-  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;//rounding formula for analogue value
-}//Scaling of voltages to 12 bit
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 
-void handleVoltageRequest() {//getting data from potentiometer and converting to whole number
+void handleVoltageRequest() {
   int analogValue = analogRead(analogPin);
-  float voltage = floatMap(analogValue, 0, 4095, 0, 3.3);//12 bit scaling 0-4095
+  float voltage = floatMap(analogValue, 0, 4095, 0, 3.3);
 
-  String response = String(analogValue) + "," + String(voltage, 2);//String Interpolation Answer
-  server.send(200, "text/plain", response);
+  // Create a JSON object
+  StaticJsonDocument<200> jsonDoc;
+  jsonDoc["analogValue"] = analogValue;
+  jsonDoc["voltage"] = voltage;
+
+  // Serialize the JSON object to a string
+  String jsonString;
+  serializeJson(jsonDoc, jsonString);
+
+  server.send(200, "application/json", jsonString); // Set the content type to JSON
 }
 
 void setup() {
-  Serial.begin(115200);//Baud Rate to begin Serilization at
+  Serial.begin(115200);
 
   WiFi.begin(ssid, password);//wifi network and password to access are correct then confirm to console
   while (WiFi.status() != WL_CONNECTED) {
@@ -32,9 +42,10 @@ void setup() {
 
   server.on("/api/voltage", handleVoltageRequest);//Following url signposts after intial HTTP address
   server.begin();
-  Serial.println("HTTP server started");//Debug to see if server 
+  Serial.println("HTTP server started");//Debug to see if server logs request
 }
 
 void loop() {
   server.handleClient();//https client handler looped so server continues recieving data from ESP
 }
+
