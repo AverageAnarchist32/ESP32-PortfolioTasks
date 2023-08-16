@@ -4,7 +4,7 @@
 <li>Analog Data Reader</li>
 <li>Github-Repo</li>
 <li>API Integreation with JSON and fetch()</li>
-#Equipment:
+<h1>Equipment</h1>
 <li>Breadboard 30 pin</li>
 <li>ESP32-WROOM</li>
 <li>Jumpercables and LEDs</li>
