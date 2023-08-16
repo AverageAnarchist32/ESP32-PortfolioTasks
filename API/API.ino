@@ -14,6 +14,7 @@ float floatMap(float x, float in_min, float in_max, float out_min, float out_max
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
+
 void handleVoltageRequest() {
   int analogValue = analogRead(analogPin);
   float voltage = floatMap(analogValue, 0, 4095, 0, 3.3);
@@ -27,7 +28,7 @@ void handleVoltageRequest() {
   String jsonString;
   serializeJson(jsonDoc, jsonString);
 
-  server.send(200, "application/json", jsonString); // Set the content type to JSON
+  server.send(200, "application/json", jsonString);
 }
 
 void setup() {
