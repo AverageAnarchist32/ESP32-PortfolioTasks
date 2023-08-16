@@ -4,8 +4,8 @@
 
 #include <ArduinoJson.h> // Include the ArduinoJson library
 
-const char* ssid = "YourWiFiNetworkName";
-const char* password = "YourWiFiPassword";
+const char* ssid = "TKZ-10";
+const char* password = "Careful11well";
 const int analogPin = 36;
 
 WebServer server(80);
@@ -39,6 +39,10 @@ void setup() {
     Serial.println("Connecting to WiFi...");//Messages to serial moniter to debug whether or not connected
   }
   Serial.println("Connected to WiFi!");//Confirms whether ESP32 is connected to network
+
+  
+    // Define the server URL including the route
+  String serverUrl = "http://" + WiFi.localIP().toString() + "/api/voltage";
 
   server.on("/api/voltage", handleVoltageRequest);//Following url signposts after intial HTTP address
   server.begin();
