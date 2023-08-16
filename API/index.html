@@ -12,19 +12,19 @@
     const getDataBtn = document.getElementById('getDataBtn');
     const apiResponse = document.getElementById('apiResponse');
 
-    getDataBtn.addEventListener('click', () => {
-      fetch('http://192.168.1.103:3000/api/voltage')
+    getDataBtn.addEventListener('click', () => {//the event listener for the button which excutes the request if clicked
+      fetch('http://192.168.1.103:3000/api/voltage')//url from ardunio webserver
         .then(response => {
           if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok');//Network problems caused data to not be found
           }
           return response.json();
         })
         .then(data => {
-          apiResponse.innerHTML = `Analog Value: ${data.analogValue}, Voltage: ${data.voltage.toFixed(2)}V`;
+          apiResponse.innerHTML = `Analog Value: ${data.analogValue}, Voltage: ${data.voltage.toFixed(2)}V`;//Display analog value and accroding resistance if network works
         })
         .catch(error => {
-          console.error('Error fetching data:', error);
+          console.error('Error fetching data:', error);//Error debugging
         });
     });
   </script>
