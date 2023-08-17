@@ -51,6 +51,28 @@ void setup() {
 }
 
 void loop() {
+  if (WiFi.status() == WL_CONNECTED) {
+    int analogValue = analogRead(analogPin);
+    float voltage = map(analogValue, 0, 4095, 0, 3300) / 1000.0;
+
+    HTTPClient http;
+    http.begin(serverUrl);
+    int httpCode = http.GET();
+
+    if (httpCode > 0) {
+      String payload = http.getString();
+      Serial.println("HTTP Response: " + payload);
+    } else {
+      Serial.println("Error on HTTP request");
+    }
+
+    http.end();
+  } else {
+    Serial.println("Connection Lost");
+  }
+
+  delay(10000); // Delay for 10 seconds before sending the next data
+}
   server.handleClient();//https client handler looped so server continues recieving data from ESP
 }
 
