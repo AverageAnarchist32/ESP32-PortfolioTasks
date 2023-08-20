@@ -4,29 +4,45 @@
   <title>ESP32 API Example</title>
 </head>
 <body>
+  <!-- Button to trigger the data fetching -->
   <button id="getDataBtn">Get Voltage from API</button>
+
+  <!-- Placeholder for displaying the API response -->
   <div id="apiResponse"></div>
 
+  <!-- JavaScript code -->
   <script>
-    //Summary of below data: when the button is clicked a reqyest is made to the node.js page which is where the data from the analog value is from this is then given and displayed on this html page through the fetch() method
+    // Get references to the button and response div
     const getDataBtn = document.getElementById('getDataBtn');
     const apiResponse = document.getElementById('apiResponse');
 
-    getDataBtn.addEventListener('click', () => {//the event listener for the button which excutes the request if clicked
-      fetch('http://192.168.1.103:3000/api/voltage')//url from ardunio webserver
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');//Network problems caused data to not be found
-          }
-          return response.json();
-        })
-        .then(data => {
-          apiResponse.innerHTML = `Analog Value: ${data.analogValue}, Voltage: ${data.voltage.toFixed(2)}V`;//Display analog value and accroding resistance if network works
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);//Error debugging
-        });
+    // Add a click event listener to the button
+    getDataBtn.addEventListener('click', () => {
+      // Fetch data from the API
+      fetch('http://192.168.1.105:1410/api/voltage', {
+        method: 'POST', // Use POST method
+        headers: {
+          'Content-Type': 'application/json' // Set the content type to JSON
+        },
+        body: JSON.stringify({}) // Empty JSON object in the request body
+      })
+      .then(response => {
+        // Check if the response is ok (status code 2xx)
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse the response as JSON
+      })
+      .then(data => {
+        // Display the fetched data in the response div
+        apiResponse.innerHTML = `Analog Value: ${data.analogValue}, Voltage: ${data.voltage.toFixed(2)}V`;
+      })
+      .catch(error => {
+        // Handle errors and display error messages
+        console.error('Error fetching data:', error);
+      });
     });
   </script>
 </body>
 </html>
+
