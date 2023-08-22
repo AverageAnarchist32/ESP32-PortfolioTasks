@@ -1,8 +1,8 @@
-#include <HTTPClient.h>
-#include <WiFi.h>
+#include <HTTPClient.h>  //Library for HTTP requests
+#include <WiFi.h>        //WiFi library
 #include <WiFiClient.h>
-#include <WebServer.h>
-#include <ArduinoJson.h>
+#include <WebServer.h>    //Library for connecting to webserver
+#include <ArduinoJson.h>  //JSON functions Library
 
 const char* ssid = "TKZ-10";
 const char* password = "Careful11";
@@ -68,7 +68,7 @@ void loop() {
     // Add headers and begin the HTTP request
     http.addHeader("Content-Type", "application/json");
     http.begin(serverUrl);
-    
+
     // Send the POST request and get the response code
     int httpCode = http.POST(jsonData);
 
@@ -86,8 +86,8 @@ void loop() {
     Serial.println("Connection Lost");
   }
 
-  delay(10000); // Delay for 10 seconds before sending the next data
-  server.handleClient(); // Continue handling client requests for the HTTP server
+  delay(10000);           // Delay for 10 seconds before sending the next data
+  server.handleClient();  // Continue handling client requests for the HTTP server
 }
 
 
