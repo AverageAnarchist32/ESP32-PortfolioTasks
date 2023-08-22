@@ -4,8 +4,8 @@
 #include <WebServer.h>    //Library for connecting to webserver
 #include <ArduinoJson.h>  //JSON functions Library
 
-const char* ssid = "TKZ-10";
-const char* password = "Careful11";
+const char* ssid = "";
+const char* password = "";
 const int analogPin = 4;
 
 WebServer server(80);
@@ -37,6 +37,7 @@ void setup() {
   Serial.begin(115200);
 
   WiFi.begin(ssid, password);
+  //Connecting to WiFi and printing it to the serial moniter the status of connection
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.println("Connecting to WiFi...");
@@ -72,7 +73,7 @@ void loop() {
     // Send the POST request and get the response code
     int httpCode = http.POST(jsonData);
 
-    // Check the response code
+    // Check the response connection and strength if it is over 0 then request was succesful
     if (httpCode > 0) {
       String payload = http.getString();
       Serial.println("HTTP Response: " + payload);
