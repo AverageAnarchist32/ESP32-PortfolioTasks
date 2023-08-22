@@ -1,6 +1,6 @@
 # ESP32-PortfolioTasks
 <p>This is a selection of mini-projects which are based off the format suggested from the Portfolio sections. The tasks selected were the following:</p>
-<li>LED Blinker</li>
+- LED Blinker
 <li>Analog Data Reader</li>
 <li>Github-Repo</li>
 <li>API Integreation with JSON and fetch()</li>
