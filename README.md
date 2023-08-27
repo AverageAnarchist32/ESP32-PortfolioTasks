@@ -11,6 +11,7 @@ This is a selection of mini-projects which are based off the format suggested fr
 
 
 ## Equipment
+
 Breadboard 30 pin
 <li>ESP32-WROOM</li>
 <li>Jumpercables and LEDs</li>
